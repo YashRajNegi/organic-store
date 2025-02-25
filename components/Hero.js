@@ -1,6 +1,11 @@
+"use client";
 import React from "react";
 import Banner from "./Banner";
 import ProductCard from "./ProductCard";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const Hero = () => {
   const products = [
@@ -17,18 +22,72 @@ const Hero = () => {
       discount: "250",
     },
     {
-      image: "/images/product2.jpg",
-      title: "Organic Brown Rice",
-      price: "200",
-      discount: "250",
-    },
-    {
       image: "/images/product3.jpg",
-      title: "Organic Quinoa",
+      title: "Khichdi Mix",
       price: "300",
       discount: "350",
     },
+    {
+      image: "/images/product4.jpg",
+      title: "Mandwa ",
+      price: "180",
+      discount: "220",
+    },
+    {
+      image: "/images/product5.jpg",
+      title: "Jhangora",
+      price: "150",
+      discount: "180",
+    },
   ];
+
+  const CustomPrevArrow = ({ onClick }) => (
+    <div 
+      className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-green-600 text-white p-2 rounded-full cursor-pointer z-10"
+      onClick={onClick}
+    >
+      <FaArrowLeft size={24} />
+    </div>
+  );
+
+  const CustomNextArrow = ({ onClick }) => (
+    <div 
+      className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-600 text-white p-2 rounded-full cursor-pointer z-10"
+      onClick={onClick}
+    >
+      <FaArrowRight size={24} />
+    </div>
+  );
+
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    nextArrow: <CustomNextArrow />, 
+    prevArrow: <CustomPrevArrow />, 
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
 
   return (
     <div className="relative bg-green-50">
@@ -49,17 +108,20 @@ const Hero = () => {
           <a href="#" className="px-8 py-3 border border-green-600 text-green-600 rounded-md">Learn More</a>
         </div>
 
-        {/* Product Cards Section */}
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map((product, index) => (
-            <ProductCard
-              key={index}
-              image={product.image}
-              title={product.title}
-              price={product.price}
-              discount={product.discount}
-            />
-          ))}
+        {/* Product Cards Section with Slider */}
+        <div className="mt-12 relative">
+          <Slider {...sliderSettings}>
+            {products.map((product, index) => (
+              <div key={index} className="px-2">
+                <ProductCard
+                  image={product.image}
+                  title={product.title}
+                  price={product.price}
+                  discount={product.discount}
+                />
+              </div>
+            ))}
+          </Slider>
         </div>
       </div>
     </div>

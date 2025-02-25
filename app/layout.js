@@ -1,6 +1,8 @@
+// layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar"; // Import Navbar
+import Navbar from "@/components/Navbar";
+import { CartProvider } from "@/components/CartContext"; // Import CartProvider from components
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "UTTRANJALI - Organic Store",
-  description: "Bringing the pure and organic produce of Uttarakhand to your table.",
+  description:
+    "Bringing the pure and organic produce of Uttarakhand to your table.",
 };
 
 export default function RootLayout({ children }) {
@@ -23,9 +26,13 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Navbar />
-        <main className="pt-16">{children}</main>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <CartProvider>
+          <Navbar />
+          <main className="pt-16">{children}</main>
+        </CartProvider>
       </body>
     </html>
   );

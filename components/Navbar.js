@@ -4,10 +4,15 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ShoppingCart, Search, Menu, X, ChevronDown } from "lucide-react";
+import { useCart } from "./CartContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { cart } = useCart();
+
+  // Calculate total quantity of items in cart
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
@@ -56,17 +61,23 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Icons */}
+        {/* Icons Section */}
         <div className="flex items-center space-x-4">
+          {/* Search Icon */}
           <button className="p-2 hover:bg-gray-100 rounded-full">
             <Search className="h-5 w-5 text-gray-600" />
           </button>
-          <button className="p-2 hover:bg-gray-100 rounded-full relative">
+
+          {/* Cart Icon */}
+          <Link href="/cart" className="p-2 hover:bg-gray-100 rounded-full relative">
             <ShoppingCart className="h-5 w-5 text-gray-600" />
-            <span className="absolute top-0 right-0 bg-green-600 text-white rounded-full w-4 h-4 text-xs flex items-center justify-center">
-              0
-            </span>
-          </button>
+            {totalQuantity > 0 && (
+              <span className="absolute -top-1 -right-1 bg-green-600 text-white rounded-full min-w-[20px] h-5 text-xs flex items-center justify-center px-1">
+                {totalQuantity}
+              </span>
+            )}
+          </Link>
+
           {/* Mobile Menu Toggle */}
           <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X className="h-6 w-6 text-gray-600" /> : <Menu className="h-6 w-6 text-gray-600" />}

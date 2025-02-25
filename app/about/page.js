@@ -22,7 +22,7 @@ const About = () => {
               </p>
               
               <p className="text-lg text-gray-700">
-                Founded in <strong>[year]</strong>, we have been working closely with farmers in the Himalayan region to cultivate and harvest
+                Founded in <strong>2021</strong>, we have been working closely with farmers in the Himalayan region to cultivate and harvest
                 a wide variety of organic grains, pulses, and millets. Our products are grown without the use of harmful
                 pesticides or chemical fertilizers, ensuring that you get nothing but the best.
               </p>
